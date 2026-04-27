@@ -16,19 +16,19 @@ jobs:
       TZ: "America/New_York"
     steps:
       - name: Clone nightlies CI repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: TileDB-Inc/conda-forge-nightly-controller
           path: ci
       - name: Clone feedstock
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: TileDB-Inc/tiledb-feedstock
           ref: main
           path: tiledb-feedstock
           ssh-key: ${{ secrets.SSH_PRIVATE_KEY_TILEDB }}
       - name: Clone source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: TileDB-Inc/TileDB
           ref: main
@@ -48,7 +48,7 @@ jobs:
       - name: Add and commit
         run: bash ci/scripts/add-and-commit.sh tiledb-feedstock
       - name: Install conda-smithy with micromamba
-        uses: mamba-org/setup-micromamba@v1
+        uses: mamba-org/setup-micromamba@v3
         with:
           environment-name: env
           create-args: conda-smithy jsonschema
@@ -67,7 +67,7 @@ jobs:
     needs: tiledb
     if: ( failure() || cancelled() ) && github.repository_owner == 'TileDB-Inc' && github.event_name == 'schedule'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Open Issue
         uses: TileDB-Inc/github-actions/open-issue@main
         with:

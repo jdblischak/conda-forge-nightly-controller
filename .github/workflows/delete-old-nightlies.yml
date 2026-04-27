@@ -35,9 +35,9 @@ jobs:
   remove:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Setup conda env
-        uses: mamba-org/setup-micromamba@v1
+        uses: mamba-org/setup-micromamba@v3
         with:
           environment-file: scripts/delete-old-nightlies.yml
           cache-environment: true
@@ -57,7 +57,7 @@ jobs:
     needs: remove
     if: ( failure() || cancelled() ) && github.repository_owner == 'TileDB-Inc' && github.event_name == 'schedule'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Open Issue
         uses: TileDB-Inc/github-actions/open-issue@main
         with:
